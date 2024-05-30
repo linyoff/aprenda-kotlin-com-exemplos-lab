@@ -1,21 +1,44 @@
-// [Template no Kotlin Playground](https://pl.kotl.in/WcteahpyN)
-
 enum class Nivel { BASICO, INTERMEDIARIO, DIFICIL }
 
-class Usuario
+class Usuario(val nome: String)
 
 data class ConteudoEducacional(var nome: String, val duracao: Int = 60)
 
-data class Formacao(val nome: String, var conteudos: List<ConteudoEducacional>) {
+data class Formacao(val nome: String, val nivel: Nivel, var conteudos: List<ConteudoEducacional>) {
 
     val inscritos = mutableListOf<Usuario>()
     
     fun matricular(usuario: Usuario) {
-        TODO("Utilize o parâmetro $usuario para simular uma matrícula (usar a lista de $inscritos).")
+        inscritos.add(usuario)
+        println("Usuário ${usuario.nome} matriculado com sucesso na formação $nome.")
     }
 }
 
 fun main() {
-    TODO("Analise as classes modeladas para este domínio de aplicação e pense em formas de evoluí-las.")
-    TODO("Simule alguns cenários de teste. Para isso, crie alguns objetos usando as classes em questão.")
+    // Criação de alguns conteúdos educacionais
+    val conteudoKotlin = ConteudoEducacional("Introdução ao Kotlin")
+    val conteudoJava = ConteudoEducacional("Programação com Java", 90)
+    val conteudoWeb = ConteudoEducacional("Desenvolvimento Web", 120)
+
+    // Criação de uma formação
+    val formacaoAndroid = Formacao(
+        nome = "Formação Android Developer",
+        nivel = Nivel.INTERMEDIARIO,
+        conteudos = listOf(conteudoKotlin, conteudoJava, conteudoWeb)
+    )
+
+    // Criação de usuários
+    val usuario1 = Usuario("Aliny")
+    val usuario2 = Usuario("Washington")
+
+    // Matricular usuários na formação
+    formacaoAndroid.matricular(usuario1)
+    formacaoAndroid.matricular(usuario2)
+
+    // Exibir informações da formação
+    println("Formação: ${formacaoAndroid.nome}")
+    println("Nível: ${formacaoAndroid.nivel}")
+    println("Conteúdos: ${formacaoAndroid.conteudos.joinToString { it.nome }}")
+    println("Inscritos: ${formacaoAndroid.inscritos.joinToString { it.nome }}")
 }
+
